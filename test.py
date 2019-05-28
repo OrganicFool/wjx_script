@@ -22,6 +22,7 @@ def autoSelect():
     time.sleep(1)
  
     #单选题
+    #下面的xPath要自己通过插件抓，一般火狐上都是这个
     xpath1 = '/html/body/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[2]/div[2]/fieldset/div[1]/div[2]/ul/li[%s]/a' % str(random.randint(1,4))
     answer_1 = driver.find_elements_by_xpath(xpath1)[0]
     answer_1.click()
@@ -46,6 +47,6 @@ def autoSelect():
  
  
 if __name__ == '__main__':
-    #循环4次（不要一次太多，不然会有反爬虫机制（验证码））
+    #循环10次（不要一次太多，不然会有反爬虫机制（验证码））
     for index in range(1,11):
         autoSelect()
