@@ -11,7 +11,8 @@ selenium版本：3.141.0
 
 
 
-方法：将geckodriver考到你的浏览器根目录下（最新网址：https://github.com/mozilla/geckodriver/releases），然后将这个目录添加到环境变量
+方法：将geckodriver考到你的浏览器根目录下(最新网址：https://github.com/mozilla/geckodriver/releases)
+然后将这个目录添加到环境变量
 然后运行脚本即可
 
 目前脚本中的样例代码是一道单选，一道多选，一道文本，默认的asp是我用来测试的问卷，可以根据自己的问卷改变设计
