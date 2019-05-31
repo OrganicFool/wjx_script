@@ -128,7 +128,7 @@ def autoSelect():
 
     #多选题
     xpath2 = '/html/body/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[2]/div[2]/fieldset/div[2]/div[2]/ul/li[placeholder]/a'
-    ratio(driver,xpath2)
+    checkbox(driver,xpath2)
 
     #文本框
     xpath3='//*[@id="q3"]'
