@@ -147,6 +147,6 @@ def autoSelect():
  
 if __name__ == '__main__':
     #循环10次（不要一次太多，不然会有反爬虫机制（验证码））
-    for index in range(1,11):
+    for i in range(10):
         autoSelect()
 
