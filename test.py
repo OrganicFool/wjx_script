@@ -4,6 +4,13 @@ import random
 from selenium import webdriver
 
 def rand_pick(seq , probabilities):
+    '''随机数
+            指定随机序列和概率，选取序列中的对象
+           
+        Args：
+            seq：指定的序列，必须为可迭代对象
+            probabilities：序列中对应索引下元素的概率
+    '''
     assert len(seq)==len(probabilities) and abs((sum(probabilities)-1))<1e-3
     x = random.uniform(0 ,1)
     cumprob = 0.0
@@ -36,8 +43,8 @@ def ratio(driver,xpath,placeholder='placeholder',choice_number=4,distribution=No
     time.sleep(sleep_time)
 
 def double(driver,xpath,placeholder='placeholder',choice_number=4,distribution=None,sleep_time=0.8):
-    """单选题
-            定义单选题的随机回答
+    """双选题
+            定义双选题的随机回答
 
 
         Args：
