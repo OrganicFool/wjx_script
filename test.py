@@ -3,6 +3,17 @@ import time
 import random
 from selenium import webdriver
 
+def rand_pick(seq , probabilities):
+    assert len(seq)==len(probabilities) and abs((sum(probabilities)-1))<1e-3
+    x = random.uniform(0 ,1)
+    cumprob = 0.0
+    for item , item_pro in zip(seq , probabilities):
+        cumprob += item_pro
+        if x < cumprob:
+            break
+    return item
+
+
 def ratio(driver,xpath,placeholder='placeholder',choice_number=4,distribution=None,sleep_time=0.8):
     """单选题
             定义单选题的随机回答
@@ -18,9 +29,37 @@ def ratio(driver,xpath,placeholder='placeholder',choice_number=4,distribution=No
     """
     assert xpath.count(placeholder)==1,'mismatched placeholder!!!'
     if distribution is None : distribution=[1/choice_number]*choice_number
-    random_option=str(random.randint(1,choice_number))
-    xpath=xpath.replace(placeholder,random_option)
+    random_option=rand_pick(list(range(1,choice_number+1)),distribution)
+    xpath=xpath.replace(placeholder,str(random_option))
     answer=driver.find_elements_by_xpath(xpath)[0]
+    answer.click()
+    time.sleep(sleep_time)
+
+def double(driver,xpath,placeholder='placeholder',choice_number=4,distribution=None,sleep_time=0.8):
+    """单选题
+            定义单选题的随机回答
+
+
+        Args：
+            driver：驱动
+            xpath：抓取到的html对象（选项）
+            placeholder：占位符，用于标记选项的位置
+            choice_number：选项数
+            distribution：选项概率分布，默认平均分布
+            sleep_time：答题后等待时间
+    """
+    assert choice_number>=2
+    assert xpath.count(placeholder)==1,'mismatched placeholder!!!'
+    if distribution is None : distribution=[1/choice_number]*choice_number
+    random_option=rand_pick(list(range(1,choice_number+1)),distribution)
+    random_option_2=rand_pick(list(range(1,choice_number+1)),distribution)
+    while random_option_2!=random_option:
+        random_option_2=rand_pick(list(range(choice_number)),distribution)
+    xpath1=xpath.replace(placeholder,str(random_option))
+    xpath2=xpath.replace(placeholder,str(random_option_2))
+    answer=driver.find_elements_by_xpath(xpath)[0]
+    answer.click()
+    answer=driver.find_elements_by_xpath(xpath2)[0]
     answer.click()
     time.sleep(sleep_time)
 
@@ -67,6 +106,7 @@ def textaera(driver,xpath,keys="hahaha~",sleep_time=0.8):
     time.sleep(sleep_time)
 
 
+
 def autoSelect():
     #根据浏览器类型选择方法   火狐：Firefox    Chrome：Chrome   ie：IE
     #后面的是你的浏览器对应根目录
@@ -81,7 +121,7 @@ def autoSelect():
 
     #多选题
     xpath2 = '/html/body/div[2]/div[1]/div[2]/div[1]/div/div[1]/div[2]/div[2]/fieldset/div[2]/div[2]/ul/li[placeholder]/a'
-    checkbox(driver,xpath2)
+    ratio(driver,xpath2)
 
     #文本框
     xpath3='//*[@id="q3"]'
