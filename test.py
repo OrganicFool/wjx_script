@@ -60,11 +60,11 @@ def double(driver,xpath,placeholder='placeholder',choice_number=4,distribution=N
     if distribution is None : distribution=[1/choice_number]*choice_number
     random_option=rand_pick(list(range(1,choice_number+1)),distribution)
     random_option_2=rand_pick(list(range(1,choice_number+1)),distribution)
-    while random_option_2!=random_option:
+    while random_option_2==random_option:
         random_option_2=rand_pick(list(range(choice_number)),distribution)
     xpath1=xpath.replace(placeholder,str(random_option))
     xpath2=xpath.replace(placeholder,str(random_option_2))
-    answer=driver.find_elements_by_xpath(xpath)[0]
+    answer=driver.find_elements_by_xpath(xpath1)[0]
     answer.click()
     answer=driver.find_elements_by_xpath(xpath2)[0]
     answer.click()
